@@ -1,8 +1,6 @@
 "use client";
 
-import { ReactNode } from "react"
-
-
+import { ReactNode } from "react";
 interface Props {
 	children: ReactNode;
 
@@ -10,7 +8,7 @@ interface Props {
 }
 const Container = ({ children }: Props) => {
 	return (
-		<div className="max-w-630 mx-auto xl:px-20 ms:px-10 sm:px-2 px-4">
+		<div className="max-w-630  mx-auto xl:px-20 ms:px-10 sm:px-2 px-4">
 			{children}
 		</div>
 	)

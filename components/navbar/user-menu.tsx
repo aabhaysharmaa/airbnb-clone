@@ -11,7 +11,7 @@ import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types";
 
 interface Props {
-	currentUser?: SafeUser
+	currentUser?: SafeUser | null
 }
 
 const UserMenu = ({ currentUser }: Props) => {
@@ -31,7 +31,7 @@ const UserMenu = ({ currentUser }: Props) => {
 				<div className="p-4 md:px-2 md:py-1 border border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition" onClick={toggleOpen}>
 					<AiOutlineMenu />
 					<div className="hidden md:block">
-						<Avatar src={currentUser?.user?.image as string} />
+						<Avatar src={currentUser?.user?.image || "/images/placeholder.png"} />
 					</div>
 				</div>
 			</div>
