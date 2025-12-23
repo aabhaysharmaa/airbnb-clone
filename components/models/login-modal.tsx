@@ -5,13 +5,14 @@ import Modal from "./modal";
 import Input from "../inputs/input";
 import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
-import axios from "axios";
+
 import Button from "../button";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import Heading from "../heading";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 const LoginModal = () => {
 	const loginModal = useLoginModal();
@@ -26,8 +27,8 @@ const LoginModal = () => {
 
 	const handleRegister = (data: FieldValues) => {
 		setIsLoading(true)
-		axios.post("/api/login", data).then(() => {
-
+		signIn("credentials", data).then(() => {
+			toast.success("Logged in")
 		}).catch(() => {
 			toast.error("Something went Wrong")
 		}).finally(() => {

@@ -1,20 +1,32 @@
-// This is your Prisma schema file,
+import prisma from "@/libs/prismadb";
+
+
+
+
+export const getUserByEmail = async (email: string) => {
+	try {
+		const user = await prisma.user.findUnique({ where: { email } });
+		return user ;
+	} catch (error) {
+		throw new Error((error as Error).message)
+	}
+}
+
+/**
+ * // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../app/generated/prisma"
 }
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
 }
-
-
 
 model User {
   id             String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -59,7 +71,7 @@ model Listing {
   category      String
   roomCount     Int
   bathroomCount Int
-  guestCount    Int
+  guestCount    String
   locationValue String
   userId        String        @db.ObjectId
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -79,3 +91,4 @@ model Reservation {
   listings Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }
 
+ */
