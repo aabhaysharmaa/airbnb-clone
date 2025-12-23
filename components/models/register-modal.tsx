@@ -4,13 +4,14 @@ import axios from "axios";
 import Modal from "./modal"
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import Heading from "../heading";
 import Input from "../inputs/input";
 import toast from "react-hot-toast";
 import Button from "../button";
+import useLoginModal from "@/hooks/useLoginModal";
 
 
 const RegisterModal = () => {
@@ -24,6 +25,7 @@ const RegisterModal = () => {
 		}
 	});
 	const registerModal = useRegisterModal();
+	const loginModal = useLoginModal();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = (data: FieldValues) => {
@@ -43,6 +45,13 @@ const RegisterModal = () => {
 		}
 	}
 
+	const toggleModal = () => {
+		if (!loginModal.isOpen) {
+			registerModal.onClose();
+			loginModal.onOpen();
+		}
+	}
+
 	const footerContent = (
 		<div className="flex flex-col gap-3 mt-4">
 			<hr />
@@ -51,7 +60,7 @@ const RegisterModal = () => {
 			<div className="text-neutral-500 text-center mt-4 font-light">
 				<div className="flex flex-row items-center justify-center gap-2">
 					<div className="">Already have an account?</div>
-					<div onClick={registerModal.onClose} className="text-neutral-800 cursor-pointer hover:underline">Log In</div>
+					<div onClick={toggleModal} className="text-neutral-800 cursor-pointer hover:underline">Log In</div>
 				</div>
 			</div>
 		</div>

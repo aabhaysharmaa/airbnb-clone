@@ -1,4 +1,5 @@
 
+import ModalProvider from '@/components/modal-providers'
 import Modal from '@/components/models/modal'
 import RegisterModal from '@/components/models/register-modal'
 import NavBar from '@/components/navbar/navbar'
@@ -13,8 +14,8 @@ interface Props {
 const HomeLayout = ({ children }: Props) => {
 	return (
 		<main>
-			<Toaster/>
-           <RegisterModal/>
+			<Toaster />
+			<ModalProvider />
 			<NavBar />
 			{children}
 		</main>
