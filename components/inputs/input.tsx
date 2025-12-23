@@ -1,9 +1,10 @@
 "use client"
 
+import { LoginSchema } from "@/schemas";
 import clsx from "clsx";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
-
+import * as z from "zod";
 
 interface InputProps {
 	id: string;
@@ -12,7 +13,7 @@ interface InputProps {
 	disabled?: boolean;
 	required?: boolean;
 	formatPrice?: boolean
-	register: UseFormRegister<FieldValues>
+	register: UseFormRegister<z.infer<typeof LoginSchema>>
 	errors: FieldErrors
 }
 

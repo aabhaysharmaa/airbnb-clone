@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Nunito } from "next/font/google";
+import Provider from "@/components/provider";
 
 // custom font for our project
 const font = Nunito({
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   description: "Airbnb Clone",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -20,10 +21,15 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+
+
       <body
         className={`${font.className} antialiased`}
       >
-        {children}
+        <Provider>
+          {children}
+        </Provider>
+
       </body>
     </html>
   );

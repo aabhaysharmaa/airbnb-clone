@@ -12,10 +12,12 @@ import Input from "../inputs/input";
 import toast from "react-hot-toast";
 import Button from "../button";
 import useLoginModal from "@/hooks/useLoginModal";
-
+import { signIn } from "next-auth/react";
+import * as z from "zod";
+import { LoginSchema } from "@/schemas";
 
 const RegisterModal = () => {
-	const { handleSubmit, register, formState: {
+	const { handleSubmit, register, reset, formState: {
 		errors
 	} } = useForm<FieldValues>({
 		defaultValues: {
@@ -28,15 +30,16 @@ const RegisterModal = () => {
 	const loginModal = useLoginModal();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const onSubmit = (data: FieldValues) => {
+	const onSubmit = (data: z.infer<typeof LoginSchema>) => {
 		try {
 			setIsLoading(true)
 			axios.post("/api/register", data)
 				.then(() => {
 					toast.success("Register Successful")
 					registerModal.onClose();
+					reset()
 				}).catch(() => {
-					toast.error("Something went wrong!")
+					toast.error("Something Went Wrong")
 				})
 		} catch (error) {
 			console.log("Error in onSubmit", error);
@@ -55,8 +58,8 @@ const RegisterModal = () => {
 	const footerContent = (
 		<div className="flex flex-col gap-3 mt-4">
 			<hr />
-			<Button className="" outline label="Continue with Google" icon={FcGoogle} onCLick={() => { }} />
-			<Button className="" outline label="Continue with Github" icon={AiFillGithub} onCLick={() => { }} />
+			<Button className="" outline label="Continue with Google" icon={FcGoogle} onCLick={() => signIn('google')} />
+			<Button className="" outline label="Continue with Github" icon={AiFillGithub} onCLick={() => signIn("github")} />
 			<div className="text-neutral-500 text-center mt-4 font-light">
 				<div className="flex flex-row items-center justify-center gap-2">
 					<div className="">Already have an account?</div>

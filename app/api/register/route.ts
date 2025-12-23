@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 		} = body;
 		const existingUser = await getUserByEmail(email);
 		if (existingUser) {
-			return NextResponse.json({ message: "user already exits" })
+			return NextResponse.json({ message: "user already exits" },{status : 400})
 		}
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const newUser = await prisma?.user.create({
