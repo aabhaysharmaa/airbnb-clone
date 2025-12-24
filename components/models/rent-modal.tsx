@@ -1,12 +1,16 @@
-"use client";
+/* eslint-disable react-hooks/exhaustive-deps */
 
+"use client";
 import { useRentModal } from "@/hooks/useRentModal";
 import Modal from "./modal";
 import { useMemo, useState } from "react";
 import Heading from "../heading";
 import { categoriesItems } from "../navbar/categories";
 import CategoryInput from "../inputs/category-input";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import CountrySelect from "../inputs/country-select";
+import dynamic from "next/dynamic";
+
 
 enum STEPS {
   CATEGORY = 0,
@@ -19,7 +23,7 @@ enum STEPS {
 
 interface RentFormValues {
   category: string;
-  location: any | null;
+  location: unknown | null;
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
@@ -33,7 +37,7 @@ const RentModal = () => {
   const modal = useRentModal();
   const [step, setStep] = useState(STEPS.CATEGORY);
 
-  const { register, handleSubmit, setValue, watch , control, reset, formState } =
+  const { register, handleSubmit, setValue, watch, control, reset, formState } =
     useForm<RentFormValues>({
       defaultValues: {
         category: "",
@@ -49,7 +53,14 @@ const RentModal = () => {
     });
 
   // Use useWatch instead of watch to avoid memoization warnings
+  // eslint-disable-next-line react-hooks/incompatible-library
   const category = watch("category")
+  const location = watch("location")
+
+const Map = useMemo(() =>
+  dynamic(() => import("../map"), { ssr: false })
+, [location]);
+
 
   const setCustomValue = (id: keyof RentFormValues, value: string) => {
     setValue(id, value, {
@@ -72,7 +83,7 @@ const RentModal = () => {
     [step]
   );
 
-  const bodyContent = (
+  let bodyContent = (
     <div className="flex flex-col gap-8">
       <Heading
         title="Which of these best describes your place?"
@@ -93,6 +104,22 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="Where is your place located?"
+          subtitle="Help guests find you!"
+        />
+        <CountrySelect
+          value={location}
+          onChange={(value) => setCustomValue("location", value)}
+        />
+        <Map center={location?.latlng} />
+      </div>
+    )
+
+  }
+
   return (
     <Modal
       title="Airbnb your home!"
@@ -101,6 +128,7 @@ const RentModal = () => {
       secondaryActionLabel={secondaryActionLabel}
       isOpen={modal.isOpen}
       body={bodyContent}
+      onSubmit={onNext}
       onClose={modal.onClose}
     />
   );
