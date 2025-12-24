@@ -13,7 +13,7 @@ import { BsSnow } from "react-icons/bs";
 
 
 
-export const categories = [
+export const categoriesItems = [
 	{ label: "Beach", icon: TbBeach, description: "This property is close to the beach!" },
 	{ label: "Windmills", icon: GiWindmill, description: "This property has windmills!" },
 	{ label: "Modern", icon: MdOutlineVilla, description: "This property is Modern!" },
@@ -47,7 +47,7 @@ const Categories = () => {
 	return (
 		<Container>
 			<div className="flex pt-4 flex-row justify-between items-center overflow-x-auto w-full">
-				{categories.map((item) => (
+				{categoriesItems.map((item) => (
 					<CategoriesBox key={item.label} label={item.label} selected={category === item.label} icon={item.icon} />
 				))}
 			</div>

@@ -4,7 +4,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./modal";
 import Input from "../inputs/input";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import Button from "../button";
 import { AiFillGithub } from "react-icons/ai";
@@ -52,13 +52,12 @@ const LoginModal = () => {
 	const social = (provider: "google" | "github") => {
 		signIn(provider)
 	}
-	const toggleModal = () => {
+	const toggleModal = useCallback(() => {
 		if (!registerModal.isOpen) {
 			loginModal.onClose();
 			registerModal.onOpen();
 		}
-	}
-
+	},[registerModal, loginModal])
 	const bodyContent = (
 		<div className="flex flex-col  gap-4">
 			<Heading title="Welcome Back to Airbnb" subtitle="Login to your account!" />

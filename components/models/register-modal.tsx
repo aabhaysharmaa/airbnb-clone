@@ -14,7 +14,7 @@ import Button from "../button";
 import useLoginModal from "@/hooks/useLoginModal";
 import { signIn } from "next-auth/react";
 import * as z from "zod";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema, RegisterTypes } from "@/schemas";
 
 const RegisterModal = () => {
 	const { handleSubmit, register, reset, formState: {
@@ -30,7 +30,7 @@ const RegisterModal = () => {
 	const loginModal = useLoginModal();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+	const onSubmit = (data: z.infer<typeof RegisterTypes>) => {
 		try {
 			setIsLoading(true)
 			axios.post("/api/register", data)

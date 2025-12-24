@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -11,7 +13,7 @@ interface Props {
 }
 
 const CategoriesBox = ({ icon: Icon, label, selected }: Props) => {
-const router = useRouter();
+	const router = useRouter();
 	const params = useSearchParams();
 	const handleClick = useCallback(() => {
 		let currentQuery = {};
@@ -39,9 +41,9 @@ const router = useRouter();
 	}, [params, label, router]);
 
 	return (
-		<div onClick={handleClick}  className={clsx("flex  text-neutral-500 transition  flex-col items-center justify-center cursor-pointer gap-2  border-b-2 hover:text-neutral-800", selected ? "border-b-neutral-800 text-neutral-800" : ' text-neutral-500 border-transparent')}>
+		<div onClick={handleClick} className={clsx("flex 	1	qZ1text-neutral-500 transition  flex-col items-center justify-center cursor-pointer gap-2  border-b-2 hover:text-neutral-800", selected ? "border-b-neutral-800 text-neutral-800" : ' text-neutral-500 border-transparent')}>
 			<Icon size={26} />
-			<div className="text-sm font-normal">
+			<div className="text-sm font-normal ">
 				{label}
 			</div>
 		</div>
