@@ -76,7 +76,7 @@ const Modal = ({
 						">
 							{/* HEADER */}
 							<div className="flex items-center p-6 rounded-t justify-center relative border-b">
-								<button className="border-0 cursor-pointer p-1 hover:opacity-70 transition absolute left-9" onClick={onClose}>
+								<button className="border-0 cursor-pointer p-1 hover:opacity-70 transition absolute left-9" onClick={handleClose}>
 									<IoMdClose size={18} />
 								</button>
 								<div className="text-lg font-semibold">

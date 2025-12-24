@@ -13,7 +13,7 @@ interface InputProps {
 	disabled?: boolean;
 	required?: boolean;
 	formatPrice?: boolean
-	register: UseFormRegister<z.infer<typeof LoginSchema>>
+	register: UseFormRegister<z.infer<typeof LoginSchema >>
 	errors: FieldErrors
 }
 
