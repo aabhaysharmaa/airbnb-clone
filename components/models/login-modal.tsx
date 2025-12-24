@@ -38,9 +38,6 @@ const LoginModal = () => {
 					router.refresh();
 					loginModal.onClose();
 				}
-				if (callback?.error) {
-					toast.error("Something went Wrong!")
-				}
 			})
 		} catch {
 			toast.error("Something Went Wrong")
@@ -70,7 +67,7 @@ const LoginModal = () => {
 		<div className="flex flex-col gap-3 mt-4">
 			<hr />
 			<Button outline icon={FcGoogle} label="Continue with Google" onCLick={() => social("google")} />
-			<Button outline icon={AiFillGithub} label="Continue with Google" onCLick={() => social("github")} />
+			<Button outline icon={AiFillGithub} label="Continue with Github" onCLick={() => social("github")} />
 			<div className="flex flex-row items-center justify-center my-3 gap-1">
 				<div className="text-base text-neutral-400">Don&apos;t have an account?</div>
 				<div onClick={toggleModal} className="text-neutral-900 cursor-pointer hover:underline">Register</div>
