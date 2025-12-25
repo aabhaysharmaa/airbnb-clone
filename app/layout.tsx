@@ -11,7 +11,7 @@ const font = Nunito({
 export const metadata: Metadata = {
   title: "Airbnb",
   description: "Airbnb Clone",
-  icons : "/images/icon.png"
+  icons: "/images/icon.png"
 };
 
 export default function RootLayout({
@@ -22,8 +22,6 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-
-
       <body
         className={`${font.className} antialiased`}
       >
