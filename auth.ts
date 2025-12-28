@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from "next-auth"
 import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
@@ -8,42 +7,41 @@ import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./utils/user";
 import bcrypt from "bcryptjs";
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	adapter: PrismaAdapter(prisma),
-	session: { strategy: "jwt" },
+
 	providers: [
+
 		Credentials({
 			async authorize(credentials) {
 				const validateFields = LoginSchema.safeParse(credentials);
 				if (!validateFields.success) {
-					return null
+					throw new Error("Invalid Credentials")
 				}
 				const { email, password } = validateFields.data
 				const existingUser = await getUserByEmail(email as string)
-				if (!existingUser) return null
+				if (!existingUser) throw new Error("No user exists")
 				const isCorrectPassword = await bcrypt.compare(password, existingUser.hashedPassword as string);
-				if (!isCorrectPassword) return null
+				if (!isCorrectPassword) throw new Error("Invalid Credentials")
 				return {
 					id: existingUser.id,
-					email: existingUser.email,
 					name: existingUser.name,
+					email: existingUser.email,
 				};
-			}
 
+			}
 		}),
 		Github({
-			clientId: process.env.AUTH_GITHUB_ID as string,
-			clientSecret: process.env.AUTH_GITHUB_SECRET as string
+			clientId: process.env.AUTH_GITHUB_ID,
+			clientSecret: process.env.AUTH_GITHUB_SECRET
 		}),
 		Google({
-			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-		}),
-	],
-	debug: true,
+			clientId: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET
+		})],
 	pages: {
 		error: "/error"
-	}
+	},
+	session: { strategy: "jwt" }
 })
 
